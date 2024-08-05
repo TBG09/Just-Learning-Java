@@ -160,6 +160,7 @@ public class Main {
             System.out.println("Added 2 new options, Rename a file and Changing the read-only property of files, simple enough.");
             System.out.println("Fixed a few bugs, one dumb one was that the file name was touching the sentence and wasn't separated properly.");
             System.out.println("Anyways thats it for 3.9.4. I worked for like 1hr and 30 mins for this update.");
+            System.exit(0);
         }
         // Continue with displaying options and handling user input if not in Termux
         if (!runningOnTermux) {
