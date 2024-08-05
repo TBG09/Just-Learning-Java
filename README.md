@@ -5,5 +5,5 @@ This project was made using Intelij idea community(although I don't think the ed
 Anyways yea, if you want to use this just provide credit(I bet you won't anyway)
 
 
-**If you want help with arguments then just put the argument help at the end**
+**If you want help with arguments then just put the argument help at the end.**
 **No arguments will just run the program as normal.**
