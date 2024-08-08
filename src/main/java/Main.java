@@ -111,7 +111,7 @@ public class Main {
                 if (!runningOnTermux) {
                     hasCustomArgument = true;
                     Logger.info("Main", "Window Launching!");
-                    window.StartWindow("Just Learn java 2.5.2(Test Window)");
+                    window.StartWindow("Just Learn java 3.9.4(Test Window)");
                     Logger.info("Main", "Not a termux environment, continuing with window launch.");
                     latch.await(); // Wait until the window is closed
                 } else {
