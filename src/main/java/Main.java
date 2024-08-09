@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         Boolean argumentCheck = true;
+        Boolean onlineMode = true;
 
         StartupJobs.main(args);
 
@@ -52,6 +53,7 @@ public class Main {
 
 
 
+
         // Get the runtime instance
         Runtime runtime = Runtime.getRuntime();
         if (runtime != null) {
@@ -89,6 +91,7 @@ public class Main {
                 System.out.println("window - opens the test window.");
                 System.out.println("credits - shows credits.");
                 System.out.println("changelog - shows the changelog.");
+                System.out.println("snake - launches the game snake.");
                 System.out.println("That's all lol.");
                 System.exit(0);
             } else if (Arguments.argumentCheck("properties", args)) {
@@ -111,7 +114,7 @@ public class Main {
                 if (!runningOnTermux) {
                     hasCustomArgument = true;
                     Logger.info("Main", "Window Launching!");
-                    window.StartWindow("Just Learn java 3.9.4(Test Window)");
+                    window.StartWindow("Just Learn java 4.1.1(Test Window)");
                     Logger.info("Main", "Not a termux environment, continuing with window launch.");
                     latch.await(); // Wait until the window is closed
                 } else {
@@ -147,21 +150,24 @@ public class Main {
         if (Arguments.argumentCheck("credits", args)) {
             ConsoleManagement.clearConsole();
             Logger.info("Arguments", "Displaying credits!");
-            System.out.println("98% coded by Bluelist");
-            System.out.println("2% Code given by Chatgpt and thank you to chatgpt for helping me :D");
+            System.out.println("97% coded by Bluelist");
+            System.out.println("3% Code given by Chatgpt and thank you to chatgpt for helping me :D");
             System.exit(0);
         }
 
         if (Arguments.argumentCheck("changelog",args)) {
-            System.out.println("Changes in version 3.9.4:");
-            System.out.println("Added credits argument.");
-            System.out.println("Added this changelog(Obvious enough).");
-            System.out.println("Added a feature to create .log files at logs\\ which is created automatically.");
-            System.out.println("Added 2 new options, Rename a file and Changing the read-only property of files, simple enough.");
-            System.out.println("Fixed a few bugs, one dumb one was that the file name was touching the sentence and wasn't separated properly.");
-            System.out.println("Anyways thats it for 3.9.4. I worked for like 1hr and 30 mins for this update.");
+            System.out.println("Changes in version 4.1.1:");
+            System.out.println("Added snake game, to launch use arg snake!");
             System.exit(0);
         }
+
+        if (Arguments.argumentCheck("snake", args)) {
+            Logger.info("Main", "Starting method SnakeGame.");
+            String[] snakeGameArgs = {"snake"};
+            SnakeGame.main(snakeGameArgs);
+            latch.await();
+        }
+        
         // Continue with displaying options and handling user input if not in Termux
         if (!runningOnTermux) {
             System.out.println("What do you want to do?");
