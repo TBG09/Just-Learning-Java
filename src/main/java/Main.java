@@ -158,6 +158,7 @@ public class Main {
         if (Arguments.argumentCheck("changelog",args)) {
             System.out.println("Changes in version 4.1.1:");
             System.out.println("Added snake game, to launch use arg snake!");
+            System.out.println("Added a blue cube to the window which you can move with arrow keys.");
             System.exit(0);
         }
 
