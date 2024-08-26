@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class IOHandler {
 
@@ -16,6 +18,19 @@ public class IOHandler {
             } catch (IOException e) {
                 Logger.fatal("IOHandler", "An error occurred while trying to create your file: " + e);
             }
+        }
+
+        public String readContents(String filePath) {
+            StringBuilder content = new StringBuilder(); // Use StringBuilder to accumulate file contents
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    content.append(line).append(System.lineSeparator()); // Append each line and a new line separator
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return content.toString(); // Return the accumulated content as a String
         }
 
         public void FileSize(String unit, String filePath) {

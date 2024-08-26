@@ -1,3 +1,4 @@
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,36 @@ public class Main {
 
         Logger.info("Main", "Started! Hello from dev!");
 
+        DebugMode debugMode = new DebugMode();
+        if (debugMode != null) {
+            Logger.info("ObjectInit", "DebugMode object successfully initialized!");
+        } else {
+            Logger.warn("ObjectInit", "DebugMode object failed to initialize :(");
+        }
+
+        StartupJobs startupJobs = new StartupJobs();
+
+// Log debug information if debug mode is enabled
+        if (DebugMode.isDebug()) {
+            Logger.debug("Main", "Running build 0071 on version 4.2.2");
+            Logger.debug("Main", "Is a dev build?: yessir");
+
+            // Log system information with null checks
+            Logger.debug("Main", "Running on " +
+                    (startupJobs.osName != null ? startupJobs.osName : "unknown OS") + " " +
+                    (startupJobs.osVersion != null ? startupJobs.osVersion : "unknown version") + " on an " +
+                    (startupJobs.deviceArch != null ? startupJobs.deviceArch : "unknown architecture") + ".");
+            if (startupJobs.osName != null && startupJobs.osVersion != null && startupJobs.deviceArch != null ) {
+
+            }   else {
+                Logger.debug("Main","Ok what? How are you even... forget it...");
+            }
+
+
+        } else {
+            // Handle case when debug mode is not enabled
+        }
+
 
         // Initialize Arguments object
         Arguments arguments = new Arguments();
@@ -27,40 +58,20 @@ public class Main {
 
         // Initialize Window object
         Window window = new Window();
-        if (window != null) {
             Logger.info("ObjectInit", "Window object successfully initialized!");
-        } else {
-            Logger.warn("ObjectInit", "Window object failed to initialize, skipping argument check.");
-        }
 
         // Initialize Scanner object
         Scanner scanner = new Scanner(System.in);
-        if (scanner != null) {
             Logger.info("ObjectInit", "Scanner object successfully initialized!");
-        } else {
-            Logger.fatal("ObjectInit", "Scanner object failed to initialize. :(");
-            System.exit(1);
-        }
 
         // Initialize IOHandler object
         IOHandler.IO io = new IOHandler.IO();
-        if (io != null) {
             Logger.info("ObjectInit", "IOHandler object successfully initialized!");
-        } else {
-            Logger.fatal("ObjectInit", "IOHandler object failed to initialize. :(");
-            System.exit(1);
-        }
-
-
 
 
         // Get the runtime instance
         Runtime runtime = Runtime.getRuntime();
-        if (runtime != null) {
             Logger.info("ObjectInit", "Runtime object successfully initialized!");
-        } else {
-            Logger.warn("ObjectInit", "Runtime object failed to initialize. :(");
-        }
 
         // Get the total memory allocated to the JVM
         assert runtime != null;
@@ -76,6 +87,7 @@ public class Main {
         boolean runningOnTermux = isRunningOnTermux();
         if (runningOnTermux) {
             Logger.info("Main", "Running on Termux! Skipping window creation.");
+            System.exit(0);
         }
 
         // Check for custom arguments if argumentCheck is true
@@ -86,7 +98,7 @@ public class Main {
 
             // Check for "help" argument
             if (Arguments.argumentCheck("help", args)) {
-                System.out.println("Version 2.4.1");
+                System.out.println("Version 4.2.2");
                 System.out.println("properties - this shows properties of files, not folders.");
                 System.out.println("window - opens the test window.");
                 System.out.println("credits - shows credits.");
@@ -156,9 +168,10 @@ public class Main {
         }
 
         if (Arguments.argumentCheck("changelog",args)) {
-            System.out.println("Changes in version 4.1.1:");
-            System.out.println("Added snake game, to launch use arg snake!");
-            System.out.println("Added a blue cube to the window which you can move with arrow keys.");
+            System.out.println("Changes in version 4.2.2.0071-dev1:");
+            System.out.println("Fixed a few strings");
+            System.out.println("Added debug option");
+            System.out.println("Extra info displayed with debug");
             System.exit(0);
         }
 
@@ -168,9 +181,20 @@ public class Main {
             SnakeGame.main(snakeGameArgs);
             latch.await();
         }
-        
-        // Continue with displaying options and handling user input if not in Termux
-        if (!runningOnTermux) {
+        if (Arguments.argumentCheck("debug", args)) {
+            if (debugMode.isDebug()) {
+                System.out.println("1) Force a random error, or fatal error.");
+            }   else {
+                System.exit(0);
+            }
+
+        }
+       // if (!Arguments.argumentCheck("-ANSI", args)) {
+           // Logger.ToggleANSIOn();
+       // } else {
+         //   Logger.ToggleANSIOff();
+     //   }
+
             System.out.println("What do you want to do?");
             TimeUnit.SECONDS.sleep((long) 1.5); // Sleep for 1.5 seconds
             System.out.println("1) Create a file");
@@ -261,9 +285,6 @@ public class Main {
                 System.out.println("Uhhh that isn't an option...");
                 System.exit(1);
             }
-        } else {
-            Logger.info("Main", "No interactive options available in Termux.");
-        }
     }
 
     private static boolean isRunningOnTermux() {
