@@ -9,3 +9,6 @@ If you are wondering where the other releases are... they are gone, meh, who nee
 
 **If you want help with arguments then just put the argument help at the end.**
 **No arguments will just run the program as normal.**
+
+
+**Main branch is always latest**
