@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "org.learn.java"
-version = "4.2.2.0071-dev1"
+version = "4.2.2.0084-dev2"
 
 repositories {
     mavenCentral()
@@ -12,9 +12,10 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+    // JSON Parsing library (e.g., org.json)
+    implementation("org.json:json:20211205")
 }
-
-
 
 tasks.test {
     useJUnitPlatform()
@@ -22,7 +23,9 @@ tasks.test {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "Main" // Update this to the fully qualified name of your main class if needed
+        attributes["Main-Class"] = "Learn.Core.Main"
     }
 
+    // Include all dependencies in the JAR
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
